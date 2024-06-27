@@ -47,11 +47,11 @@ fn shadowing_example(){
     let x = "Hello World";
     println!("Value of x: {}",x);
 
-    // let mut y = 2000;  // mut is unnecessary in shadowing
-    // println!("Value of y: {}",y);
+    let mut y = 2000;  // mut is unnecessary in shadowing
+    println!("Value of y: {}",y);
 
-    // let mut y = true;
-    // println!("Value of y: {}",y);
+    let mut y = true;
+    println!("Value of y: {}",y);
 }
 
 fn scope_example(){
