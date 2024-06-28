@@ -1,6 +1,6 @@
 # Rust: Summer Internship
 <details>
-<summary>Day-01</summary>
+<summary>Day-01: Installation And Introduction to Variables & Datatypes</summary>
 
 ## Installation
 
@@ -104,5 +104,107 @@ fn main() {
     let z: char = 'ℤ'; // with explicit type annotation
 }
 ```
+
+
+</details>
+<details>
+<summary>Day-02: Compound Datatypes And Control Flow</summary>
+
+## Tuple
+
+### Declaration
+```rust
+let tup: (i32, f64, u8) = (500, 6.4, 1);
+```
+
+### Accessing Tuple
+```rust
+tup.0 
+tup.1
+```
+
+- Tuples have a fixed length and cannot grow or shrink.
+
+### Destructuring a Tuple
+```rust
+let tup = (500, 6.4, 1);
+let (x, y, z) = tup;
+```
+
+### Unit
+- The tuple without any values has a special name, unit. This value and its corresponding type are both written `()` and represent an empty value or an empty return type.
+
+### Memory Allocation
+- Tuples are allocated on the stack, not on the heap.
+
+## Array
+
+### Properties
+- Unlike a tuple, every element of an array must have the same type.
+- Arrays have a fixed length.
+
+### Declaration
+```rust
+let a = [1, 2, 3, 4, 5];
+let a: [i32; 5] = [1, 2, 3, 4, 5];
+let a = [3; 5]; // To declare an array with the same elements.
+```
+
+### Accessing Arrays
+```rust
+let a = [1, 2, 3, 4, 5];
+let first = a[0];
+let second = a[1];
+```
+
+### Memory Allocation
+- Arrays are allocated on the stack.
+
+### Invalid Accessing of Array
+```rust
+let a = [1, 2, 3, 4, 5];
+let first = a[5]; // Error: Index out of bounds
+```
+
+
+# Control Flow
+
+## If Expression
+```rust
+fn main() {
+    let number = 3;
+    if number < 5 {
+        println!("condition was true");
+    } else {
+        println!("condition was false");
+    }
+}
+```
+
+## Multiple Conditions with else if
+```rust
+fn main() {
+    let number = 6;
+    if number % 4 == 0 {
+        println!("number is divisible by 4");
+    } else if number % 3 == 0 {
+        println!("number is divisible by 3");
+    } else if number % 2 == 0 {
+        println!("number is divisible by 2");
+    } else {
+        println!("number is not divisible by 4, 3, or 2");
+    }
+}
+```
+
+## Using if in let Statement
+```rust
+fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { 6 };
+    println!("The value of number is: {number}");
+}
+```
+
 
 </details>
