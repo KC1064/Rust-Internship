@@ -165,7 +165,20 @@ let second = a[1];
 let a = [1, 2, 3, 4, 5];
 let first = a[5]; // Error: Index out of bounds
 ```
+### Array vs Tuple
 
+| Feature                  | Array                                                  | Tuple                                                     |
+|--------------------------|--------------------------------------------------------|-----------------------------------------------------------|
+| Element Types            | All elements must have the same type                   | Elements can have different types                         |
+| Length                   | Fixed length                                           | Fixed length                                              |
+| Declaration              | `let a = [1, 2, 3, 4, 5];`                             | `let tup: (i32, f64, u8) = (500, 6.4, 1);`                |
+| Type Annotation          | `let a: [i32; 5] = [1, 2, 3, 4, 5];`                   | `let tup: (i32, f64, u8) = (500, 6.4, 1);`                |
+| Accessing Elements       | `a[0]`, `a[1]`                                         | `tup.0`, `tup.1`                                          |
+| Destructuring            | Not applicable                                         | `let (x, y, z) = tup;`                                    |
+| Memory Allocation        | Allocated on stack                                     | Allocated on stack                                        |
+| Invalid Access           | Causes a runtime panic (e.g., `a[5]` for an array of 5)| Causes a compile-time error if the tuple index is invalid |
+| Use Case                 | Homogeneous collections                                | Heterogeneous collections                                 |
+| Empty Representation     | Not applicable                                         | `()` (unit type) 
 
 # Control Flow
 
