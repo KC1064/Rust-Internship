@@ -10,6 +10,9 @@ fn main() {
     destructuring_example();
     adv_destructuring_example();
     vary_adv_destructuring_example();
+    destructuring_with_underscore_example();
+    type_annotation_example();
+    mutable_vs_shadowing_example();
 }
 
 fn immutable_variable_example() {
@@ -99,4 +102,39 @@ fn vary_adv_destructuring_example(){
 
     println!("value of x: {}",x);
     println!("value of y: {}",y);
+}
+
+fn type_annotation_example() {
+    println!("Type Annotation Example");
+    let x: i32 = 5;
+    println!("The value of i32 x is: {}", x);
+    
+    let x: u8 = 5;
+    println!("The value of u8 x is: {}", x);
+    println!();
+}
+
+fn mutable_vs_shadowing_example() {
+    println!("Mutable vs Shadowing Example");
+    // Can change the value of the var but not the type
+    let mut x = 5;
+    println!("The value of x is: {}", x);
+    x = 6;
+    println!("The new value of x is: {}", x);
+
+    let x = x + 1;
+    println!("The value of x is: {}", x);
+
+    // Can change both value and type
+    let x = false;
+    println!("The value of x is: {}", x);
+    println!();
+}
+
+fn destructuring_with_underscore_example() {
+    println!("Destructuring with Underscore Example");
+    // Not Recommended. Why?
+    let (x, _) = (1, 2);
+    println!("The value of x is: {}", x);
+    println!();
 }
