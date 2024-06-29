@@ -218,6 +218,199 @@ fn main() {
     println!("The value of number is: {number}");
 }
 ```
+</details>
 
+<details>
+<summary>Day-03: Loops in Rust</summary>
 
+## Rust Loop Examples
+ 
+Rust has three kinds of loops:
+- `loop`
+- `for`
+- `while`
+
+## Loop
+
+The `loop` keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop.
+
+```rust
+fn main() {
+    loop {
+        println!("again!");
+    }
+}
+```
+
+Rust also provides a way to break out of a loop using the `break` keyword. You can place the `break` keyword within the loop to tell the program when to stop executing the loop.
+
+You can use `continue` within a loop to skip over any remaining code in this iteration of the loop and go to the next iteration.
+
+### Example of continue statement
+
+```rust
+fn main() {
+    for i in 0..10 {
+        if i % 2 == 0 {
+            continue; // Skip even numbers
+        }
+        println!("Odd number: {}", i);
+    }
+}
+```
+
+**Output:**
+```
+Odd number: 1
+Odd number: 3
+Odd number: 5
+Odd number: 7
+Odd number: 9
+```
+
+### Example of break statement
+
+```rust
+fn main() {
+    for i in 0..10 {
+        if i == 5 {
+            break; // Exit the loop when i is 5
+        }
+        println!("Number: {}", i);
+    }
+}
+```
+
+**Output:**
+```
+Number: 0
+Number: 1
+Number: 2
+Number: 3
+Number: 4
+```
+
+### Returning values from loop
+
+```rust
+fn main() {
+    let mut counter = 0;
+    let result = loop {
+        counter += 1;
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+    println!("The result is {result}");
+}
+```
+
+**Output:**
+```
+The result is 20
+```
+
+### Loop labels to Disambiguate Between Multiple loops
+
+```rust
+fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!("count = {count}");
+        let mut remaining = 10;
+        loop {
+            println!("remaining = {remaining}");
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+        count += 1;
+    }
+    println!("End count = {count}");
+}
+```
+
+**Output:**
+```
+count = 0
+remaining = 10
+remaining = 9
+count = 1
+remaining = 10
+remaining = 9
+count = 2
+remaining = 10
+remaining = 9
+End count = 2
+```
+
+## While
+
+When the condition is true, the loop runs. When the condition ceases to be true, it breaks out of the loop.
+
+```rust
+fn main() {
+    let mut number = 3;
+    while number != 0 {
+        println!("{number}!");
+        number -= 1;
+    }
+    println!("LIFTOFF!!!");
+}
+```
+
+**Output:**
+```
+3!
+2!
+1!
+LIFTOFF!!!
+```
+
+This construct eliminates a lot of nesting that would be necessary if you used `loop`, `if`, `else`, and `break` and it’s clearer.
+
+## For
+
+We can use a `while` loop to print elements of an array, but if we update the array and forget to change the condition, it will panic at runtime. It’s also slow, because the compiler adds runtime code to perform the conditional check of whether the index is within the bounds of the array on every iteration through the loop.
+
+```rust
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+    for element in a {
+        println!("the value is: {element}");
+    }
+}
+```
+
+**Output:**
+```
+the value is: 10
+the value is: 20
+the value is: 30
+the value is: 40
+the value is: 50
+```
+
+### Print Elements in Reverse Order
+
+```rust
+fn main() {
+    for number in (1..4).rev() {
+        println!("{number}!");
+    }
+    println!("LIFTOFF!!!");
+}
+```
+
+**Output:**
+```
+3!
+2!
+1!
+LIFTOFF!!!
+```
 </details>
