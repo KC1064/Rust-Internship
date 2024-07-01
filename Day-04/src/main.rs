@@ -1,17 +1,23 @@
-// Match is a control flow statement that allows us to compare a value against 
-// a series of patterns and then execute code based on which pattern matches.
 
-// Exhaustiveness
 
 fn main() {
     // basic_match();
-    match_range();
+    // match_range();
+    // match_with_code_block();
+    match_tuple();
+    let x = 9;
+    let message = match x {
+    0 | 1  => "not many",
+    2 ..= 9 => "a few",
+    _      => "lots"
+    };
+
 }
 
 
 fn basic_match() {
-    let a = 100;
-    let b = true;
+    let a = 120;
+    let b = false;
 
     match b {
         true => println!("b is true"),
@@ -53,11 +59,11 @@ fn match_tuple() {
         (_, 2, ..) => println!("Second element is 2"),
         (_, _, 3, ..) => println!("Third element is 3"),
         (.., 4) => println!("Fourth element is 4"),
-        // (_, _, _, 4) => println!("Fourth element is 4"),
+        (_, _, _, 4) => println!("Fourth element is 4"),
 
         (x, y, z, a) => println!("{}, {}, {}, {}", x, y, z, a),
-        // (1, _, _, _) => println!("First element is 1"),
-        // (_, 2, _, _) => println!("Second element is 2"),
+        (1, _, _, _) => println!("First element is 1"),
+        (_, 2, _, _) => println!("Second element is 2"),
         _ => println!("Tuple is something else"),
     }
 }
