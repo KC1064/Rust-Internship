@@ -414,3 +414,187 @@ fn main() {
 LIFTOFF!!!
 ```
 </details>
+
+<details>
+<summary>Day-04: Matching Statements in Rust</summary>
+
+
+## Basic Match
+
+- `match` statement is a control flow construct used for pattern matching.
+- It allows you to match a value against a series of patterns and execute different code blocks based on the matched pattern.
+
+```rust
+fn main() {
+    let number = 7;
+
+    match number {
+        1 => println!("One"),
+        2 => println!("Two"),
+        3 => println!("Three"),
+        _ => println!("Other"),
+    }
+}
+```
+
+## Matching Against Multiple Patterns
+
+- You can match against multiple patterns in a single match statement.
+
+```rust
+fn main() {
+    let number = 3;
+
+    match number {
+        1 | 2 => println!("One or Two"),
+        3 | 4 => println!("Three or Four"),
+        _ => println!("Other"),
+    }
+}
+```
+
+## Matching with Binding
+
+- You can bind the matched value to a variable, which can be used in the corresponding code block.
+
+```rust
+fn main() {
+    let number = Some(7);
+
+    match number {
+        Some(n) => println!("Found a number: {}", n),
+        None => println!("No number found"),
+    }
+}
+```
+
+## Ignoring Values
+
+- If you don't need to use the matched value, you can use the underscore (`_`) pattern to ignore it.
+
+```rust
+fn main() {
+    let number = Some(7);
+
+    match number {
+        Some(_) => println!("Found a number"),
+        None => println!("No number found"),
+    }
+}
+```
+
+## Destructuring Tuples
+
+```rust
+fn main() {
+    let tup = (1, "hello");
+
+    match tup {
+        (1, greeting) => println!("The greeting is: {}", greeting),
+        _ => println!("No match"),  
+    }
+}
+```
+
+## Matching Ranges
+
+- You can match ranges in match expressions and use `_` to match any value.
+
+```rust
+fn main() {
+    let age = 21;
+
+    match age {
+        1..=17 => println!("minor"),
+        18..=120 => println!("major"),
+        _ => println!("something else"),
+    }
+}
+```
+
+## Matching Tuples
+
+- Will compare all the elements of tuples and print the appropriate message.
+
+```rust
+fn main() {
+    let tup = (1, 2, 3, 4);
+    match tup {
+        (1, 2, 3, 4) => println!("Tuple is 1, 2, 3, 4"),
+        _ => println!("Tuple is something else"),
+    }
+}
+```
+
+```rust
+fn main() {
+    let tup = (1, 2, 3, 4);
+
+    match tup {
+        (1, ..) => println!("First element is 1"),
+        (_, 2, ..) => println!("Second element is 2"),
+        (_, _, 3, ..) => println!("Third element is 3"),
+        (.., 4) => println!("Fourth element is 4"),
+        (_, _, _, 4) => println!("Fourth element is 4"),
+        (x, y, z, a) => println!("{}, {}, {}, {}", x, y, z, a),
+        (1, _, _, _) => println!("First element is 1"),
+        (_, 2, _, _) => println!("Second element is 2"),
+        _ => println!("Tuple is something else"),
+    }
+}
+```
+
+## Differences between `(.., 4)` and `(_, _, _, 4)`
+
+### Differences
+
+1. **Syntax and Readability**:
+   - `(.., 4)`: This uses the "rest pattern" (`..`) to indicate that there can be any number of elements before the last one, which must be `4`. This is more flexible and concise.
+   - `(_, _, _, 4)`: This explicitly specifies that the tuple must have exactly four elements, with the last one being `4`. This is less flexible but more explicit.
+
+2. **Pattern Matching Flexibility**:
+   - `(.., 4)`: This will match any tuple where the last element is `4`, regardless of the number of preceding elements. For example, it matches `(1, 2, 3, 4)`, `(5, 4)`, or `(6, 7, 8, 9, 4)`.
+   - `(_, _, _, 4)`: This will only match tuples that have exactly four elements, with the last element being `4`. For example, it matches `(1, 2, 3, 4)` but not `(5, 4)` or `(6, 7, 8, 9, 4)`.
+
+### Example
+
+```rust
+fn main() {
+    let tup1 = (1, 2, 3, 4);
+    let tup2 = (5, 4);
+    let tup3 = (6, 7, 8, 9, 4);
+
+    match tup1 {
+        (.., 4) => println!("(.., 4) matched"),
+        (_, _, _, 4) => println!("(_, _, _, 4) matched"),
+        _ => println!("No match"),
+    }
+
+    match tup2 {
+        (.., 4) => println!("(.., 4) matched"),
+        (_, _, _, 4) => println!("(_, _, _, 4) matched"),
+        _ => println!("No match"),
+    }
+
+    match tup3 {
+        (.., 4) => println!("(.., 4) matched"),
+        (_, _, _, 4) => println!("(_, _, _, 4) matched"),
+        _ => println!("No match"),
+    }
+}
+```
+
+**Output**:
+```
+(.., 4) matched
+(.., 4) matched
+(.., 4) matched
+```
+
+Here, `(.., 4)` matches all the tuples because they all have `4` as the last element, while `(_, _, _, 4)` only matches `tup1` because it has exactly four elements.
+
+
+
+
+
+</details>
