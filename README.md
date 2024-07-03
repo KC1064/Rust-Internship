@@ -593,8 +593,100 @@ fn main() {
 
 Here, `(.., 4)` matches all the tuples because they all have `4` as the last element, while `(_, _, _, 4)` only matches `tup1` because it has exactly four elements.
 
+</details>
+
+<details>
+<Summary>Day-05: Function in Rust</Summary>
 
 
+## Main Function
+- `main()` function is the entry point of a program.
+- Uses snake case as the conventional style for function names.
 
+Example code:
+```rust
+fn main() {
+    println!("Hello, world!");
+
+    another_function();
+}
+
+fn another_function() {
+    println!("Another function.");
+}
+```
+
+## Parameters
+- A parameter is a special variable that is part of a function’s signature.
+- It represents a value that the function expects to receive when it is called.
+- Parameters are defined in the function's definition and are used within the function to perform operations.
+
+Example:
+```rust
+fn another_function(x: i32) {
+    println!("The value of x is: {x}");
+}
+```
+
+## Arguments
+- An argument is a concrete value provided to a function when it is called.
+- These values are passed to the function’s parameters and used within the function to perform its operations.
+
+Example:
+```rust
+fn main() {
+    another_function(5);
+}
+```
+
+## Note
+- You must declare the type of each parameter. Rust requires type annotations in function definitions. 
+
+## Statements and Expressions
+- Function bodies are made up of a series of statements optionally ending in an expression.
+- Statements are instructions that perform some action and do not return a value.
+- Expressions evaluate to a resultant value.
+
+Example:
+```rust
+{
+    let x = 3; // Example of a statement
+    x + 1 // Example of an expression
+}
+```
+- Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, and it will then not return a value.
+
+## Functions with Return Values
+- Functions can return values to the code that calls them. We don’t name return values, but we must declare their type after an arrow (`->`).
+- We can return early from a function by using the `return` keyword and specifying a value.
+
+Example:
+```rust
+fn five() -> i32 {
+    5
+}
+
+fn main() {
+    let x = five();
+
+    println!("The value of x is: {x}");
+}
+```
+
+## Example of Error Related to Return Value
+
+Example:
+```rust
+fn main() {
+    let x = plus_one(5);
+
+    println!("The value of x is: {x}");
+}
+
+fn plus_one(x: i32) -> i32 {
+    x + 1;
+}
+```
+- Mismatched types error reveals the core issue with this code. The definition of the function `plus_one` says that it will return an `i32`, but statements don’t evaluate to a value, which is expressed by `()`, the unit type.
 
 </details>
