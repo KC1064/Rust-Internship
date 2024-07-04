@@ -690,3 +690,221 @@ fn plus_one(x: i32) -> i32 {
 - Mismatched types error reveals the core issue with this code. The definition of the function `plus_one` says that it will return an `i32`, but statements don’t evaluate to a value, which is expressed by `()`, the unit type.
 
 </details>
+
+<details>
+<summary>Day-06: Structs in Rust</summary>
+
+## Structs
+
+Structs are custom data types that let you group/package together different related data and reference them as a single unit.
+
+### Types of Structs
+
+1. **Named-Field Struct**: A struct where all the fields have a name associated with them.
+2. **Tuple-Struct**: A struct where fields are defined as a tuple and not named.
+3. **Unit-Struct**: A struct where there are no fields defined.
+
+### Creating and Using Structs
+
+You can create an instance of a struct using `let`, as usual, but use a key: value style syntax to set each field. You can access the fields through dot notation, e.g., `origin.x`. Values in structs are immutable by default; use `mut` to make them mutable.
+
+```rust
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let mut point = Point { x: 0, y: 0 };
+
+    point.x = 5;
+
+    println!("The point is at ({}, {})", point.x, point.y);
+}
+```
+
+Rust does not support field mutability at the language level.
+
+### Update Syntax
+
+A struct can include `..` to indicate that you want to use a copy of some other struct for some of the values.
+
+```rust
+fn main() {
+    struct Point3d {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+
+    let mut point = Point3d { x: 0, y: 0, z: 0 };
+    point = Point3d { y: 1, ..point };
+}
+```
+
+### Named-Field Structs
+
+```rust
+struct DummyStudent {
+    name: String, // Field
+    age: u8, // Field
+    is_a_student: bool, // Field
+}
+```
+
+### Tuple Structs
+
+```rust
+fn main() {
+    struct Color(i32, i32, i32);
+    struct Point(i32, i32, i32);
+
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+}
+```
+
+Tuple structs are preferred more than simple tuples because they improve readability and it's easier to find the context of the tuple being used.
+
+The members of a tuple struct may be accessed by dot notation or destructuring.
+
+```rust
+fn main() {
+    struct Color(i32, i32, i32);
+    struct Point(i32, i32, i32);
+
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+
+    let black_r = black.0;
+    let Point(_, origin_y, origin_z) = origin;
+}
+```
+
+### Unit-like Structs
+
+```rust
+struct Electron {} // Use empty braces...
+struct Proton;     // ...or just a semicolon.
+
+// Use the same notation when creating an instance.
+let x = Electron {};
+let y = Proton;
+let z = Electron; // Error
+```
+
+A struct is called 'unit-like' because it resembles the empty tuple, `()`, sometimes called 'unit'.
+
+### Shorthand Representation
+
+If the names of the fields are the same as the names of the variables being assigned to them, then we can use the shorthand notation.
+
+Example:
+
+```rust
+struct Student {
+    sgpa: f32,
+    age: u8, // MAX: 255
+    is_a_student: bool,
+    sic: u32,
+    year: u16,
+}
+
+let student_age = 20;
+let is_a_student_var = true;
+let student_sic = 123456;
+let student_year = 2021;
+
+let student = Student {
+    sgpa: 9.5,
+    age: student_age,
+    is_a_student: is_a_student_var,
+    sic: student_sic,
+    year: student_year,
+};
+```
+
+### Nested Structure
+
+```rust
+struct Library {
+    name: String,
+    location: String,
+    books: Book, // Only one book in the library
+}
+
+struct Book {
+    author: String,
+    book_details: BookDetails,
+}
+
+struct BookDetails {
+    name: String,
+    isbn: String,
+}
+```
+
+## Implementation in Rust
+
+### impl
+
+An implementation block, denoted by the keyword `impl` followed by the struct's name, is used to define methods and functions for that struct. A struct can have multiple `impl` blocks.
+
+### Methods
+
+Methods are like functions, declared with `fn`, that can have parameters and a return value. They differ from functions as they are defined within a struct and always have `self` as their first parameter.
+
+### self
+
+The `self` keyword represents the instance of the struct the method is called on. It can be used as `self` (shorthand for `self: Self`), `&self` (for `self: &Self`), or `&mut self` (for `self: &mut Self`). This shorthand allows for less repetition, especially with generic types.
+
+### Associated Functions
+
+Functions inside an `impl` block that do not take `self` as a parameter are called associated functions. They are associated with the struct but do not operate on an instance of it. These are often used as constructors to return a new instance of the struct.
+
+### Example
+
+```rust
+impl Student {
+    fn new(sgpa: f32, age: u8, is_a_student: bool, sic: u32, year: u16) -> Student {
+        Student {
+            sgpa,
+            age,
+            is_a_student,
+            sic,
+            year,
+        }
+    }
+
+    // printing the student's details
+    fn print_student_details(&self) {
+        self.sgpa;
+        self.sic;
+        println!("Student Details: ");
+    }
+
+    fn compare_student_sgpa(&self, other: Student) {
+        if self.sgpa > other.sgpa {
+            println!("Self has a higher SGPA");
+        } else {
+            println!("Other has a higher SGPA");
+        }
+    }
+}
+
+fn something_outside_impl() {
+    let raj: Student = Student::default();
+    let jay: Student = Student {
+        sgpa: 9.0,
+        age: 20,
+        is_a_student: true,
+        sic: 123456,
+        year: 2021,
+    };
+
+    let new_student = Student::new(8.5, 20, true, 123456, 2021);
+    raj.compare_student_sgpa(jay);
+    jay.compare_student_sgpa(raj);
+}
+```
+</details>
