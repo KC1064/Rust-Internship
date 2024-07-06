@@ -908,3 +908,222 @@ fn something_outside_impl() {
 }
 ```
 </details>
+
+<details>
+
+<summary>Day 07: Rust Enums</summary>
+
+## Definition
+Enums (or enumerations) are a user-defined data type that allows us to select a value from a list of related values.
+
+### Syntax
+```rust
+enum Sport {
+    Basketball,
+    Volleyball,
+    Football,
+    Cricket,
+}
+```
+Created an enum named `Sport` with a list of values: `Basketball`, `Volleyball`, `Football`, and `Cricket`. These enum values are known as variants.
+
+## Accessing Enum Variants
+```rust
+enum Direction {
+    North,
+    East,
+    South,
+    West,
+}
+```
+### To create instances of enum variants:
+```rust
+let north = Direction::North;
+let east = Direction::East;
+let south = Direction::South;
+let west = Direction::West;
+```
+
+### Example: Enum Datatype
+```rust
+fn main() {
+    // Define enum Direction
+    #[derive(Debug)]
+    enum Direction {
+        North,
+        East,
+        South,
+        West,
+    }
+
+    // Initialize and access enum variants
+    let north = Direction::North;
+    let east = Direction::East;
+    let south = Direction::South;
+    let west = Direction::West;
+
+    // Print enum values
+    println!("{:?}", north);
+    println!("{:?}", east);
+    println!("{:?}", south);
+    println!("{:?}", west);
+}
+```
+Note: We have used `#[derive(Debug)]` above the enum definition. It allows Rust to print the variants inside the enum.
+
+## Initializing Enum Variants with Values
+```rust
+fn main() {
+    // Define enum
+    #[derive(Debug)]
+    enum Result {
+        Score(f64),
+        Valid(bool),
+    }
+
+    // Initialize enum with values
+    let num = Result::Score(3.14);
+    let bool = Result::Valid(true);
+    
+    println!("num = {:?}", num);
+    println!("bool = {:?}", bool);
+}
+```
+
+## Enum with Different Data Types
+### Struct Variant
+Syntax:
+```rust
+enum Game {
+    Quit,
+    Position { x: i32, y: i32 },
+}
+```
+
+### Tuple Variant
+Syntax:
+```rust
+enum Game {
+    Quit,
+    ChangeBackground(i32, i32, i32),
+}
+```
+
+### String Variant
+Syntax:
+```rust
+enum Game {
+    Quit,
+    Print(String),
+}
+```
+
+### Example
+```rust
+fn main() {
+    // Define enum with multiple variants and data types
+    #[derive(Debug)]
+    enum Game {
+        Quit,
+        Print(String),
+        Position { x: i32, y: i32 },
+        ChangeBackground(i32, i32, i32),
+    }
+
+    // Initialize enum with values
+    let quit = Game::Quit;
+    let print = Game::Print(String::from("Hello World!"));
+    let position = Game::Position { x: 10, y: 20 };
+    let color = Game::ChangeBackground(200, 255, 255);
+
+    // Print enum values
+    println!("quit = {:?}", quit);
+    println!("print = {:?}", print);
+    println!("position = {:?}", position);
+    println!("color = {:?}", color);
+}
+```
+
+## Comparing Two Instances of Enum
+```rust
+let rgb_red = ColorModel::RGB(255, 0, 0);
+let rgba_red = ColorModel::RGBA(255, 0, 0, 255);
+// With named members, use curly braces and the properties' names
+let cmyk_black: ColorModel = ColorModel::CMYK{cyan: 0, magenta: 0, yellow: 0, key: 255};
+
+rgb_red == rgba_red; // false
+```
+
+## Define Methods on Enums
+```rust
+impl Message {
+    fn call(&self) {
+        // Method body would be defined here
+    }
+}
+
+let m = Message::Write(String::from("hello"));
+m.call();
+```
+
+## Pattern Matching in Enums
+```rust
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            println!("State quarter from {:?}!", state);
+            25
+        }
+    }
+}
+```
+
+### Another Example
+```rust
+#[derive(PartialEq, Clone)]
+enum ColorModel {
+    RGB(u8, u8, u8),
+    RGBA(u8, u8, u8, u8),
+    CMYK { cyan: u8, magenta: u8, yellow: u8, key: u8 },
+}
+
+impl ColorModel {
+    pub fn to_hex(&self) -> String {
+        match self {
+            ColorModel::RGB(red, green, blue) => format!("#{:X}{:X}{:X}", red, green, blue),
+            _ => self.to_rgb().to_hex(),
+        }
+    }
+
+    fn to_rgb(&self) -> Self {
+        match self {
+            ColorModel::RGB(_, _, _) => self.clone(),
+            ColorModel::RGBA(red, green, blue, alpha) => {
+                let red: u8 = (1 - alpha) * 255 + alpha * red;
+                let green: u8 = (1 - alpha) * 255 + alpha * green;
+                let blue: u8 = (1 - alpha) * 255 + alpha * blue;
+
+                ColorModel::RGB(red, green, blue)
+            },
+            ColorModel::CMYK { cyan, magenta, yellow, key } => {
+                let red = 255 * (1 - cyan) * (1 - key);
+                let green = 255 * (1 - magenta) * (1 - key);
+                let blue = 255 * (1 - yellow) * (1 - key);
+
+                ColorModel::RGB(red, green, blue)
+            },
+        }
+    }
+}
+```
+</details>
