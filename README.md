@@ -1127,3 +1127,103 @@ impl ColorModel {
 }
 ```
 </details>
+
+<details>
+<summary>Day-08: Ownership in Rust</summary>
+
+## Ownership
+In Rust, ownership and borrowing are the pillars of memory safety and concurrency.
+
+### Ownership
+- Ensures that memory is managed efficiently and safely.
+- Rust’s move semantics enable efficient memory management by transferring ownership between variables.
+
+```rust
+fn main() {
+    let original = String::from("Hello");
+    let moved = original; // Ownership transferred to 'moved'
+
+    // Error: 'original' no longer accessible
+    println!("{}", original);
+}
+```
+
+## Stack and Heap
+- A stack operates on a Last In, First Out (LIFO) principle, like a stack of plates where you add to the top and remove from the top. Adding is called pushing, and removing is called popping. All data on the stack must have a fixed, known size. Data with unknown or variable sizes must be stored on the heap.
+- The heap is less organized, you request space, the allocator finds a spot, marks it as used, and returns a pointer. This is called allocating. The pointer, stored on the stack, leads to the data on the heap. It's like being seated at a restaurant: the host finds a table, and latecomers ask where you're seated to find you.
+- Pushing to the stack is faster than heap allocation because the stack's location is always known, while the heap requires searching for available space and bookkeeping.
+- Accessing heap data is slower than stack data due to the need to follow pointers. Processors work more efficiently with data stored closely together, like on the stack, rather than scattered, like on the heap.
+- When a function is called, its parameters and local variables are pushed onto the stack. Once the function finishes, these values are popped off the stack.
+- Ownership addresses the challenges of tracking, minimizing duplicates, and cleaning up unused data on the heap. Understanding ownership clarifies its purpose in managing heap data, reducing the need to think about the stack and heap frequently.
+
+## Ownership Rules
+- Each value in Rust has an owner.
+- There can only be one owner at a time.
+- When the owner goes out of scope, the value will be dropped.
+
+## Variable Scope
+```rust
+{                      // s is not valid here, it’s not yet declared
+    let s = "hello";   // s is valid from this point forward
+}                      // this scope is now over, and s is no longer valid
+```
+- When s comes into scope, it is valid.
+- It remains valid until it goes out of scope.
+
+## String Type
+- The types covered previously are of a known size, can be stored on the stack and popped off the stack when their scope is over, and can be quickly and trivially copied to make a new, independent instance if another part of code needs to use the same value in a different scope.
+- Rust has a second string type, String. This type manages data allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time. You can create a String from a string literal using the `from` function.
+
+```rust
+let s = String::from("hello");
+```
+
+## Mutated String
+```rust
+let mut s = String::from("hello");
+
+s.push_str(", world!"); // push_str() appends a literal to a String
+
+println!("{s}"); // This will print `hello, world!`
+```
+
+## Variables and Data Interacting with Move
+
+### For Integers:
+```rust
+let x = 5;
+let y = x;
+```
+- This binds the value 5 to `x` and then copies it to `y`, resulting in two variables, `x` and `y`, both holding the value 5. Since integers have a fixed size, both values are stored on the stack.
+
+### For Strings:
+```rust
+let s1 = String::from("hello");
+let s2 = s1;
+```
+- A String is made up of three parts, shown on the left: a pointer to the memory that holds the contents of the string, a length, and a capacity. This group of data is stored on the stack. On the right is the memory on the heap that holds the contents.
+![Strings-1](https://doc.rust-lang.org/book/img/trpl04-01.svg)
+- Assigning `s1` to `s2` copies the String's pointer, length, and capacity from the stack, but not the actual data on the heap.
+![Strings-1](https://doc.rust-lang.org/book/img/trpl04-02.svg)
+
+
+## Variables and Data Interacting with Clone
+- If we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called `clone`.
+```rust
+let s1 = String::from("hello");
+let s2 = s1.clone();
+
+println!("s1 = {s1}, s2 = {s2}");
+```
+
+## Stack-Only Data: Copy
+```rust
+let x = 5;
+let y = x;
+
+println!("x = {x}, y = {y}");
+```
+- Types with a known size at compile time, like integers, are stored on the stack, making value copies quick and straightforward. Thus, there's no need to prevent `x` from being valid after creating `y`, and calling `clone` isn't necessary as deep and shallow copying are identical in this case.
+
+
+</details>
