@@ -1227,3 +1227,97 @@ println!("x = {x}, y = {y}");
 
 
 </details>
+
+
+<details> 
+<summary>Day-09: Borrowing in Rust</summary>
+## Mechanism of Borrowing
+- Borrowing allows a function or method to temporarily borrow a reference to a value owned by another part of the program.
+- It enables a function or method to use a value without taking ownership of it by passing a reference to the value instead of the value itself.
+
+## Types of References
+1. **Immutable references**: Allow the borrower to read the value but not modify it.
+2. **Mutable references**: Allow the borrower to read and modify the value.
+
+## Examples
+
+### Mutable Borrowing
+
+```rust
+fn main() {
+    let mut x = 5;
+    {
+        let y = &mut x; // mutable borrow of x
+        *y += 1;
+        println!("y: {}", y); // prints "y: 6"
+    } // y goes out of scope and the mutable borrow ends
+    println!("x: {}", x); // prints "x: 6"
+}
+```
+- We create a mutable variable `x` and a mutable borrow `y`. By dereferencing `y`, we modify `x`. After the inner block, where `y` is valid, `y` goes out of scope, and `x` can be used safely again.
+
+### Immutable Borrowing
+
+Immutable references allow the borrower to read the value but not modify it.
+
+```rust
+fn main() {
+    let x = 10;
+    print_int(&x); // immutable borrow of x
+}
+
+fn print_int(v: &i32) {
+    println!("{}", v);
+}
+```
+- We create an integer `x` and then pass an immutable borrow of `x` to the `print_int` function. The `print_int` function then prints the value of the integer. Because the borrow is immutable, we cannot modify `x` within the function.
+
+### Mutable Borrowing with Functions
+
+Mutable references allow the borrower to both read and modify the value.
+
+```rust
+fn main() {
+    let mut x = 10;
+    modify_int(&mut x); // mutable borrow of x
+    print_int(&x); // immutable borrow of x
+}
+
+fn modify_int(v: &mut i32) {
+    *v += 5;
+}
+
+fn print_int(v: &i32) {
+    println!("{}", v);
+}
+```
+- In this example, we create a mutable integer `x`, then pass a mutable borrow of `x` to the `modify_int` function, which modifies its value. Afterward, we pass an immutable borrow of `x` to the `print_int` function, which prints the modified value of `x`.
+
+## Borrowing Rules
+- At any given time, you can have either one mutable reference or any number of immutable references to a value.
+- References must always be valid, meaning they must point to a valid memory location.
+- The borrow checker enforces these rules at compile time, so the program will not compile if it violates them.
+
+## Ownership and Borrowing in Structs
+
+```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect = Rectangle { width: 10, height: 20 };
+    let area = rect.area(); // immutable borrow of rect
+    println!("area: {}", area);
+}
+```
+- We define a struct `Rectangle` that has two fields, `width` and `height`. We then implement a method `area` for the `Rectangle` struct that calculates the area of the rectangle. Finally, we create a `rect` instance of the `Rectangle` struct and pass an immutable borrow of `rect` to the `area` method to calculate the area of the rectangle.
+
+</details>
