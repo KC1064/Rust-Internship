@@ -1231,6 +1231,7 @@ println!("x = {x}, y = {y}");
 
 <details> 
 <summary>Day-09: Borrowing in Rust</summary>
+
 ## Mechanism of Borrowing
 - Borrowing allows a function or method to temporarily borrow a reference to a value owned by another part of the program.
 - It enables a function or method to use a value without taking ownership of it by passing a reference to the value instead of the value itself.
