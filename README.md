@@ -1325,7 +1325,7 @@ fn main() {
 
 <details>
 
-<summary>Day-10:</summary>
+<summary>Day-10: Generics</summary>
 
 
 ## Generic Functions
