@@ -1322,3 +1322,188 @@ fn main() {
 - We define a struct `Rectangle` that has two fields, `width` and `height`. We then implement a method `area` for the `Rectangle` struct that calculates the area of the rectangle. Finally, we create a `rect` instance of the `Rectangle` struct and pass an immutable borrow of `rect` to the `area` method to calculate the area of the rectangle.
 
 </details>
+
+<details>
+
+<summary>Day-10:</summary>
+
+
+## Generic Functions
+
+- **Definition**: When I use generic functions, I can operate on different types of data by using placeholders for the data types they work with. These placeholders are called type parameters.
+
+### Example:
+```rust
+fn print_type<T>(_arg: T) { 
+    println!("Type is {}", std::any::type_name::<T>()); 
+}
+```
+- In this example, `print_type` is a function that accepts a single argument `_arg` of type `T`.
+- The `<T>` syntax indicates to Rust that `T` is a type parameter.
+- I use `std::any::type_name` to print the type's name.
+
+## Generic Structs
+
+- **Definition**: When I use generic structs, I can create data structures that hold values of different types. These structs use type parameters to allow flexibility in the values they store.
+
+### Example:
+```rust
+struct Circle<T> { 
+    diameter: T, 
+    height: T,
+}
+
+fn main() {
+    let object1 = Circle { diameter: 1, height: 2 }; 
+    // diameter and height are both i32
+    let object2 = Circle { diameter: 3.14, height: 2.71 }; 
+    // diameter and height are both f64
+    let object3 = Circle { diameter: "hello", height: "world" }; 
+    // diameter and height are both &str
+}
+```
+- The `Circle` struct has two fields: `diameter` and `height`, both of type `T`.
+- The `<T>` syntax specifies that `T` is a type parameter.
+- I can create instances of this struct with any type, as shown in the examples.
+
+## Generic Enums
+
+- **Definition**: When I use generic enums, I can define enums that allow for multiple types with different variants. Each variant can have its own set of associated data of different types.
+
+### Example:
+```rust
+enum Result<T, E> { 
+    Ok(T), 
+    Err(E), 
+}
+
+fn main() {
+    let result1: Result<i32, &str> = Result::Ok(42); 
+    // Ok variant with i32
+    let result2: Result<i32, &str> = Result::Err("error"); 
+    // Err variant with &str
+}
+```
+- The `Result` enum has two variants: `Ok` and `Err`.
+- `Ok` takes a value of type `T`, and `Err` takes a value of type `E`.
+- The `<T, E>` syntax specifies that both `T` and `E` are type parameters.
+- I find this enum useful for representing the result of an operation that may either succeed (`Ok`) or fail (`Err`).
+
+## Key Points
+
+- **Generic Functions**: Allow me to create functions that can operate on any data type using type parameters.
+- **Generic Structs**: Enable me to create data structures that store values of various types, providing flexibility and reusability.
+- **Generic Enums**: Allow me to define enums with variants that can store different types, making error handling more type-safe.
+
+- Generics are powerful tools in Rust that help me write flexible, reusable code while maintaining type safety. By using type parameters, I can create functions, structs, and enums that work with any data type, reducing code duplication and increasing robustness.
+
+</details>
+
+<details>
+
+<summary>Day-11: Error Handling</summary>
+
+
+## Types of Errors
+
+### 1. Unrecoverable Errors
+- Errors from which a program stops its execution. As the name suggests, we cannot recover from unrecoverable errors.
+- These errors are known as panic and can be triggered explicitly by calling the `panic!` macro.
+
+#### Example:
+```rust
+fn main() {
+    println!("Hello, World!");
+
+    // Explicitly exit the program with an unrecoverable error
+    panic!("Crash");
+}
+```
+
+Output:
+```
+Hello, World!
+thread 'main' panicked at 'Crash', src/main.rs:5:5
+```
+
+- Unrecoverable errors are also triggered by taking an action that might cause our code to panic.
+
+#### Example:
+```rust
+fn main() {
+    let numbers = [1, 2, 3];
+
+    println!("unknown index value = {}", numbers[3]);
+}
+```
+
+Output:
+```
+error: this operation will panic at runtime
+ --> src/main.rs:4:42
+  |
+4 |     println!("unknown index value = {}", numbers[3]);
+  |                                          ^^^^^^^^^^ index out of bounds: the length is 3 but the index is 3
+  |
+```
+- Rust stops us from compiling the program because it knows the operation will panic at runtime.
+
+### 2. Recoverable Errors
+- Recoverable errors are errors that won't stop a program from executing. Most errors are recoverable, and we can easily take action based on the type of error.
+
+#### Example:
+```rust
+use std::fs::File;
+
+fn main() {
+    let data_result = File::open("data.txt");
+
+    // using match for Result type
+    let data_file = match data_result {
+        Ok(file) => file,
+        Err(error) => panic!("Problem opening the data file: {:?}", error),
+    };
+
+    println!("Data file: {:?}", data_file);
+}
+```
+
+## Result Enum:
+- In the above example, the return type of the `File::open("data.txt")` is a `Result<T, E>`
+- The `Result<T, E>` type returns either a value or an error in Rust. It is an enum type with two possible variants.
+
+```
+Ok(T) → operation succeeded with value T
+Err(E) → operation failed with an error E
+```
+
+## Difference Between `Result` and `Option` enum in Rust
+- `Option` enum can return `None`, which can indicate failure.
+- `Option` is about `Some` or `None` (value or no value)
+- `Result` is about `Ok` or `Err` (result or error result)
+
+</details>
+
+<details>
+
+<summary>Day-12:</summary>
+
+</details>
+
+<details>
+
+<summary>Day-13:</summary>
+
+</details>
+
+<details>
+
+<summary>Day-14:</summary>
+
+</details>
+
+<details>
+
+<summary>Day-10:</summary>
+
+</details>
